@@ -1,6 +1,7 @@
 import discord
+import os
 
-TOKEN = 'ここに入'
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 
 client = discord.Client()
