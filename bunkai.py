@@ -1,6 +1,6 @@
 import discord
 
-TOKEN = 'NzEzMjg2NjE5NjExNzkxNDcx.Xsd6Ig.F8ER_YkGiCVzDk6dm4o0EFig194'
+TOKEN = 'ここに入'
 
 
 client = discord.Client()
