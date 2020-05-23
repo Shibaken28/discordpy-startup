@@ -54,6 +54,10 @@ async def on_message(message):
         if(n==1):
             await message.channel.send("1は素数じゃないよ")
             return
+        if(n==57):
+            await message.channel.send("57は約数が4つある素数だよ")
+            return
+        
         while n!=1:
             if(now>=10000000):
                 await message.channel.send("タイムアウト><")
