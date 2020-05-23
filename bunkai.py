@@ -1,7 +1,7 @@
 import discord
 import os
 
-TOKEN = os.environ['DISCORD_BOT_TOKEN']
+TOKEN = "NzEzMjg2NjE5NjExNzkxNDcx.XsflCg.GqzGxTvwK58CXDGMCxcrbD0UIi4"
 
 
 client = discord.Client()
@@ -33,17 +33,19 @@ async def on_message(message):
         await message.channel.send(m)
     if ('歌って' in message.content):
         await message.channel.send("conflict歌います。ズォールヒ～～↑ｗｗｗｗヴィヤーンタースｗｗｗｗｗワース フェスツｗｗｗｗｗｗｗルオルｗｗｗｗｗプローイユクｗｗｗｗｗｗｗダルフェ スォーイヴォーｗｗｗｗｗスウェンネｗｗｗｗヤットゥ ヴ ヒェンヴガｒジョｊゴアｊガオガオッガｗｗｗじゃｇｊｊ")
-
+    
     if '!neko' in message.content:
         await message.channel.send('にゃーん')
-
+    
     if sentence.startswith("!roll "):
         d=int(sentence[6:len(sentence)])
 
     if sentence.startswith("!bunkai "):
         n=int(sentence[8:len(sentence)])
         sn=n
-        prime=[]
+        prime=[-1]
+        pow=[-1]
+        kind=0
         now=2
         if(len(str(n))>=2000):
             await message.channel.send("数が大きすぎます，1999桁まで入力可能です(それでもタイムアウトの可能性あり)")
@@ -63,10 +65,20 @@ async def on_message(message):
                 await message.channel.send("タイムアウト><")
                 return
             if(n<now*now):
-                prime.append(int(n))
-                break
+                if(n==prime[kind]):
+                    pow[kind]+=1
+                    break
+                else:
+                    prime.append(int(n))
+                    pow.append(1)
+                    break
             if(n%now==0):
-                prime.append(int(now))
+                if(now==prime[kind]):
+                    pow[kind]+=1
+                else:
+                    prime.append(int(now))
+                    pow.append(1)
+                    kind+=1
                 n=int(int(n)//int(now))
                 #await message.channel.send(str(now)+"で割ります")
                 #await message.channel.send(str(n)+"になります")
@@ -77,8 +89,15 @@ async def on_message(message):
 
         if(len(prime)!=1):
             output+=str(sn)+"="
+            k=1
             for i in prime:
-                output+=str(i)+"x"
+                if(i==-1):
+                    continue
+                add="^"+str(pow[k])
+                if(pow[k]==1):
+                    add=""
+                output+=str(i)+add+"x"
+                k+=1
             output=output[0:-1]
         else:
             output+=str(int(n))+"は素数です"
