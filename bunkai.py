@@ -20,6 +20,8 @@ async def on_message(message):
     if sentence.startswith("!help"):
         await message.channel.send("!bunkai N  Nを素因数分解した結果を表示させる")
         await message.channel.send("!neko  にゃーんと鳴かせる")
+    if 'TINTIN' in message.content:
+        await client.send_file(message.channel, partyParrot.gif)
     if 'おはよう' in message.content:
         m = "おはようございます，" + message.author.name + "さん！"
         await message.channel.send(m)
