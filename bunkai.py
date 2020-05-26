@@ -7,6 +7,18 @@ TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 client = discord.Client()
 
+def get_char_width(c):
+    data = unicodedata.east_asian_width(c)
+    if data == 'Na' or data == 'H':
+        return 1
+    return 2
+
+
+def get_string_width(string):
+    width = 0
+    for c in string:
+        width += get_char_width(c)
+    return width
 
 @client.event
 async def on_ready():
@@ -17,8 +29,15 @@ async def on_message(message):
     sentence=message.content
     if message.author.bot:
         return
+    
+    if sentence.startswith("!totsu"):
+        s=sentence[7:len(sentence)]
+        sw=get_string_width(s)//2
+        await message.channel.send(sw);
+        s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  "
+        await message.channel.send(s);
     if sentence.startswith("!help"):
-        await message.channel.send("素因数分解bot ver.1.0.8\n!bunkai N  Nを素因数分解した結果を表示させる\n!neko  にゃーんと鳴かせる")
+        await message.channel.send("素因数分解bot ver.1.1.1\n!bunkai N  Nを素因数分解した結果を表示させる\n!bunkai S　Sを角吹き出しで表示させる")
     if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
         file_img = discord.File("partyParrot.gif")
         await message.channel.send(file=file_img)
