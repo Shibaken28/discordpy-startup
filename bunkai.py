@@ -18,8 +18,7 @@ async def on_message(message):
     if message.author.bot:
         return
     if sentence.startswith("!help"):
-        await message.channel.send("!bunkai N  Nを素因数分解した結果を表示させる")
-        await message.channel.send("!neko  にゃーんと鳴かせる")
+        await message.channel.send("素因数分解bot ver.1.0.8\n!bunkai N  Nを素因数分解した結果を表示させる\n!neko  にゃーんと鳴かせる")
     if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
         file_img = discord.File("partyParrot.gif")
         await message.channel.send(file=file_img)
