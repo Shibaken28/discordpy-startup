@@ -1,6 +1,7 @@
 import discord
 import os
 import random
+import unicodedata
 
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
