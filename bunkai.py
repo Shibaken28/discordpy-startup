@@ -39,7 +39,7 @@ async def on_message(message):
     if sentence.startswith("!help"):
         em = discord.Embed(title="素因数分解bot ver.1.1.1",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
-        em.add_field(name="!bunkai *S*",value="*S*を角吹き出しで表示させる")
+        em.add_field(name="!totsu *S*",value="*S*を角吹き出しで表示させる")
         #em.set_author(name="素因数分解bot ver.1.1.1")
         await message.channel.send(embed=em)
     if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
