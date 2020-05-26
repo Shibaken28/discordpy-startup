@@ -37,7 +37,8 @@ async def on_message(message):
         s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  "
         await message.channel.send(s);
     if sentence.startswith("!help"):
-        em = discord.Embed(title="!bunkai *N*",description="*N*を素因数分解した結果を表示させる",color=0x00ffff)
+        em = discord.Embed(title="素因数分解bot",color=0x00ffff)
+        em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
         em.add_field(name="!bunkai *S*",value="*S*を角吹き出しで表示させる")
         em.set_author(name="素因数分解bot ver.1.1.1")
         await message.channel.send(embed=em)
