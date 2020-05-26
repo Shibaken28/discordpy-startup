@@ -33,9 +33,9 @@ async def on_message(message):
     if sentence.startswith("!totsu"):
         s=sentence[7:len(sentence)]
         sw=get_string_width(s)//2
-        await message.channel.send(sw);
+        await message.channel.send(sw)
         s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  "
-        await message.channel.send(s);
+        await message.channel.send(s)
     if sentence.startswith("!help"):
         em = discord.Embed(title="素因数分解bot ver.1.1.1",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
