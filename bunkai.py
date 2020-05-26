@@ -112,7 +112,7 @@ async def on_message(message):
 
         output=f'{message.author.mention}\n'
 
-        if(len(prime)!=2&&pow[1]!=1):
+        if(len(prime)!=2 and pow[1]!=1):
             output+=str(sn)+"="
             k=1
             for i in prime:
