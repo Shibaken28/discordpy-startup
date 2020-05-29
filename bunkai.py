@@ -32,11 +32,11 @@ async def on_message(message):
         return
     
     if sentence.startswith("!totsu"):
-        await client.delete_message(message)
         s=sentence[7:len(sentence)]
         sw=get_string_width(s)//2
         s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  "
         await message.channel.send(s)
+        await message.delete()
     if sentence.startswith("!help"):
         em = discord.Embed(title="素因数分解bot ver.1.1.4",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
