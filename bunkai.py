@@ -32,7 +32,7 @@ async def on_message(message):
         return
     
     if sentence.startswith("!totsu"):
-        message.delete()
+        await client.delete_message(message)
         s=sentence[7:len(sentence)]
         sw=get_string_width(s)//2
         s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  "
