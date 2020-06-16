@@ -22,6 +22,21 @@ def get_string_width(string):
         width += get_char_width(c)
     return width
 
+def soinsu(x):
+    r=list()
+    now=2
+    while x!=1:
+        if(now*now>x):
+            r.append(x)
+            break
+        if(x%now==0):
+            r.append(now)
+            x=x//now
+        else:
+            now+=1
+
+    return r
+
 @client.event
 async def on_ready():
     print('AC')
