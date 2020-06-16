@@ -4,7 +4,8 @@ import random
 import unicodedata
 
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
-
+ls=[]
+bc=0
 
 client = discord.Client()
 
@@ -38,9 +39,10 @@ async def on_message(message):
         await message.channel.send(s)
         await message.delete()
     if sentence.startswith("!help"):
-        em = discord.Embed(title="素因数分解bot ver.1.1.4",color=0x00ffff)
+        em = discord.Embed(title="素因数分解bot ver.1.2.1",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
         em.add_field(name="!totsu *S*",value="*S*を角吹き出しで表示させる")
+        em.add_field(name="!bc *L*",value="レベルが*L*の素因数分解の問題を出題")
         await message.channel.send(embed=em)
     if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
         file_img = discord.File("partyParrot.gif")
@@ -129,5 +131,29 @@ async def on_message(message):
             output+=str(int(n))+"は素数です"
 
         await message.channel.send(output)
+
+    global ls
+    global bc
+    me=f'{message.author.mention}\n'
+    if sentence.startswith("!bc "):
+        n=int(sentence[4:len(sentence)])
+        if(n>50):
+            await message.channel.send(me+"The maximum level is 50. Please choice lower level.")
+        else:
+            m=random.randint(2**n,2**(n+1))
+            ls=soinsu(m)
+            await message.channel.send(me+"Level:"+str(n)+", Question:Prime factorization "+str(m))
+            bc=1
+
+    if bc and sentence.startswith("ans="):
+        s=sentence[4:len(sentence)]
+        lsa = [int(x.strip()) for x in s.split(',')]
+        lsa.sort()
+        bc=0
+        if(lsa==ls):
+            await message.channel.send(me+"correct!!")
+        else:
+            await message.channel.send(me+"WrongAnswer......   The ans is"+str(ls))
+            
 
 client.run(TOKEN)
