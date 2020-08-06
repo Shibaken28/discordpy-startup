@@ -60,17 +60,17 @@ async def on_message(message):
         em.add_field(name="!bc *L*",value="レベルが*L*の素因数分解の問題を出題")
         await message.channel.send(embed=em)
     #if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
-        #file_img = discord.File("partyParrot.gif")
-        #await message.channel.send(file=file_img)
+    #    file_img = discord.File("partyParrot.gif")
+    #    await message.channel.send(file=file_img)
     if 'おはよう' in message.content:
         m = "おはようございます，" + message.author.name + "さん！"
         await message.channel.send(m)
-    if 'ZAP' in message.content:
-        m = "＿人人人人人人人人＿\n＞　 突然のZAP　 ＜\n￣Y^Y^Y^Y^Y^Y^Y￣"
-        await message.channel.send(m)
-    if '死' in message.content:
-        m = "＿人人人人人人＿\n＞　突然の死　＜\n￣Y^Y^Y^Y^Y￣"
-        await message.channel.send(m)
+    #if 'ZAP' in message.content:
+    #    m = "＿人人人人人人人人＿\n＞　 突然のZAP　 ＜\n￣Y^Y^Y^Y^Y^Y^Y￣"
+    #    await message.channel.send(m)
+    #if '死' in message.content:
+    #    m = "＿人人人人人人＿\n＞　突然の死　＜\n￣Y^Y^Y^Y^Y￣"
+    #    await message.channel.send(m)
     if 'おやすみ' in message.content:
         m = "おやすみなさい，" + message.author.name + "さん...zzz"
         await message.channel.send(m)
