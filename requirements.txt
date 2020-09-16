@@ -1,4 +1,6 @@
 discord.py[voice]>=1.3.2
-markovify
+python
+mecab mecab-ipadic
+swig
 mecab-python3
-mecab-ipadic
+markovify
