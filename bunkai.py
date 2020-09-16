@@ -2,6 +2,8 @@ import discord
 import os
 import random
 import unicodedata
+import markovify
+import MeCab
 
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 ls=[]
@@ -46,39 +48,48 @@ async def on_message(message):
     sentence=message.content
     if message.author.bot:
         return
-    
+    if message.author.bot:
+        return
+    if ('716349767348912128' in message.content)|('713286619611791471' in message.content):
+        msg=""
+        async for message in message.channel.history():
+            if not message.author.bot:
+                msg+="\n"+message.content
+        parsed_text = MeCab.Tagger('-Owakati').parse(msg)
+        # Build model
+        parsed_text=parsed_text.replace('。', '.')
+        parsed_text=parsed_text.replace('、', ',')
+        parsed_text=parsed_text.replace(' , ', ',')
+        parsed_text=parsed_text.replace(' .', '\n')
+        parsed_text=parsed_text.replace('@', '')
+        parsed_text=parsed_text.replace('<', '')
+        parsed_text=parsed_text.replace('>', '')
+        parsed_text=parsed_text.replace('!', '')
+        text_model = markovify.NewlineText(parsed_text)
+        t=text_model.make_sentence(tries=30)
+        #print(t)
+        if(t==None):
+            await message.channel.send("素材不足...")
+        else:
+            t=t.replace(',', '、')
+            t=t.replace('.', '。\n')
+            t=t.replace(' ', '')
+            await message.channel.send(t)
     if sentence.startswith("!totsu"):
         s=sentence[7:len(sentence)]
         sw=get_string_width(s)//2
         s="＿人"+"人"*sw+"人＿\n"+"＞　"+s+"　＜\n"+"  ￣Y"+"^Y"*sw+"￣  \nby"+message.author.name
         await message.channel.send(s)
         await message.delete()
-    if sentence.startswith("!help"):
+    if sentence.startswith("!Help"):
         em = discord.Embed(title="素因数分解bot ver.1.2.1",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
         em.add_field(name="!totsu *S*",value="*S*を角吹き出しで表示させる")
         em.add_field(name="!bc *L*",value="レベルが*L*の素因数分解の問題を出題")
         await message.channel.send(embed=em)
-    #if ('TINTIN' in message.content) or ('おっぱい' in message.content) or ('ちんちん' in message.content) or ('ero' in message.content)or ('Ero' in message.content)or ('エロ' in message.content):
-    #    file_img = discord.File("partyParrot.gif")
-    #    await message.channel.send(file=file_img)
-    if 'おはよう' in message.content:
-        m = "おはようございます，" + message.author.name + "さん！"
-        await message.channel.send(m)
-    #if 'ZAP' in message.content:
-    #    m = "＿人人人人人人人人＿\n＞　 突然のZAP　 ＜\n￣Y^Y^Y^Y^Y^Y^Y￣"
-    #    await message.channel.send(m)
-    #if '死' in message.content:
-    #    m = "＿人人人人人人＿\n＞　突然の死　＜\n￣Y^Y^Y^Y^Y￣"
-    #    await message.channel.send(m)
-    if 'おやすみ' in message.content:
-        m = "おやすみなさい，" + message.author.name + "さん...zzz"
-        await message.channel.send(m)
     if ('歌って' in message.content):
         songs=["VICTORIA歌います。　サァウ↓ヴァ↑ｗｗｗ リィディアツャｗｗｗケィラァトォカｗｗｗマッジャラストゥ↑ｗｗｗファーレドォｗwｗｗｗ ラファランドゥｗｗｗオグゥトゥアｗｗｗルゥクィアロｗｗｗストォフィアァｗｗｗ ラグゥrｪフｧgarcんｗｗｗｗｗｗ","HARDCOREノ心得歌います。\n1にﾊｰｺｰ\n2にﾊｰｺｰ\n3,4がなくて\n鶏ガラSOOOOOOOOOOOOOOOUPｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ","おしゃま歌います。Lets 牛乳 Death!!ﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｯﾃﾞｯﾃﾞｯﾃﾞｯﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗ(ヘドバン( ՞ةڼ◔)ヘドバン( ՞ةڼ◔))","Aleph-0歌います。ジャンｗｗﾃﾞﾚｯﾃｯﾃﾚｯﾃﾚｯﾃｯジャンジャンジャンジャンジャン↑ｗｗｗｗｗﾃﾞﾚｯﾃｯﾃﾚｯﾃﾚｯﾃｯジャンジャンジャンジャンジャン↑ｗｗｗｗデケデケデｗｗｗデケデケデｗｗｗｗデケデケデケデケｗｗｗｗ(temptation…)バババババババババbbb","大宇宙ステージ歌います。「俺　が　一　緒　に　い　て　や　る　か　ら　…　…　」ﾋﾟｭｰｰﾝｗｗｗﾋﾟｰｰｰｯｗｗｗｗﾃﾞｹﾃﾞｹｰｯﾃﾞｹﾃﾞｹｰｯピロリロリロピロリロリロロリロリロロロリロリロロリロリロロピロロロピロロロピロロロピロロロピロロロピロロロピロロロピロロロ","オォ UNDEAD HEARTｗｗｗｗｗ\nオォ UNDEAD HEART ｗｗｗｗｗ\nヽ( ˆᴗˆ )ﾉ ヽ( ˆᴗˆ )ﾉ ヽ( ˆᴗˆ )ﾉ  \n  　/  / 　　　/  / 　　　/  / 　　\n ノ😇ゝ　  ノ😇ゝ　 ノ😇ゝ","Garakuta Doll Play歌います。ｼｰｻﾞｰﾜｯﾄﾝｗｗｗｗｗｱﾝﾀﾞｽﾃｨｰﾝｗｗｗｗｗ(ｱｱｱｱｱｱｱｱ…)ｱｸｼﾌﾞｾｨｰﾃｨｰｗｗｗｵｯﾌﾞｯｼｯﾉｯ!ｗｗｗｗｱﾝﾀﾞｰｽﾃｨｰﾝ(ｱｰｰ…ｴﾌﾞﾘﾅ----","(´･_･`)＜レッツ牛乳death☆wwwwwwﾃｪﾝ↑ﾃｪﾝ↑ﾃｪﾝ↑ﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃﾃﾃﾃﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝwwwwｲﾖｫｰ↑↑↑レッツ牛乳death☆(以上繰り返し)","BATTLE NO.1 歌います。アモアモアモアモアアモオジィｫﾞｵﾞｨﾃﾞﾝﾃﾞﾝﾃﾞﾝﾃﾞﾃﾞﾃﾞﾝﾃﾞﾝ\ｱﾓｱﾓ（՞ټ՞☝/ﾃﾞﾝﾃﾞﾝﾃﾞｹﾚﾚ\ｧｱﾓｱﾓ（՞ټ՞;☝/レッツゴォォｵｯｵｯｵｯｵｯｵｯｵｯ…ﾄﾄﾄﾄﾀﾀﾀﾀﾀﾀ\ｱﾓオｩジィ/ｲﾞｴﾞ💪(´･_･`💪)","ᕕ(՞ةڼ◔)ᕗ⁾⁾クァ～ww⇊wユゥ～ン⇈wwwフィ～⇊ン↑↑マイ→ソォ～⇈wwウィンwwウォ↑↑www～ズwww₍₍ ᕕ(՞ةڼ◔)ᕗ⁾⁾wwwア～イ↑↑wwウォ～ンwwwトゥ↓wゴォw↑↑↑wwバットゥ⇊wwア～⇈ハァ～⇈ww₍₍ ᕕ(՞ةڼ◔)ᕗ⁾⁾","エレクリだーーー チャーーラーラーrーtrwrgwウィmrgtzbダツツダツツダツツダツツダツダツデツツデツツ","conflict歌います。ズォールヒ～～↑ｗｗｗｗヴィヤーンタースｗｗｗｗｗワース フェスツｗｗｗｗｗｗｗルオルｗｗｗｗｗプローイユクｗｗｗｗｗｗｗダルフェ スォーイヴォーｗｗｗｗｗスウェンネｗｗｗｗヤットゥ ヴ ヒェンヴガｒジョｊゴアｊガオガオッガｗｗｗじゃｇｊｊ","Cyaegha歌います。ユーアーレッシーwwwワイ↑レッスィ～ジャンwwwwwハィディングシーアンwwwwフィーリンエヴァァ↓ユーアーレッシーwwwワイ↑レッスィ～ジャンwwwwwリィンユァーハァゥアンwwwwwフィーリンバァヴィル↑www","インド人歌います。ｳﾞｪﾝｳﾞｪﾝｳﾞｪﾝｗｗｗｗｗｗｳﾞｪﾊﾊｳﾞｪｯﾊｳﾞｪﾝｗｗｗｗｗ(ﾊｯ!( ﾟдﾟ )彡)ｳﾞｪﾝｳﾞｪﾝｳﾞｪﾝｗｗｗｗｗｗｳﾞｪﾊﾊｳﾞｪｯﾊｳﾞｪﾝｗｗｗｗｗ(ﾊｯﾊ( -д- )彡)","BrainPower歌います。O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA","Garakuta Doll Play歌います。オーマイガーーーァァァァーーーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗｗｗオーマイガーーーァァァァーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗオーマイガーーーァァァァーーァァーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗｗｗｗ","Fracture Ray歌います。テケテケテケテケ…ア～ｱﾋｨｨｨ…ン～ｱﾋｨｨーｲｲｲ… テンテンテンテテテテテンテンテレレン… テンテレレン…テレレン… ｾﾌﾞﾝ…ｽｨｯｸｽ…ﾌｧｲ…ﾌｫｳ…ｽﾘｨ…ﾄｳｩ…ﾜﾝ（ﾃﾚﾃﾚﾚｰ）…ｾﾞﾛ… ドゥーンｗｗｗｗ","Second Heaven歌います。Countdown…8…　7…　6…　5…　4・3・2・1三↓倍↑アイスクリームｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ(ﾃｯﾃﾚﾚｯﾃﾚﾚｯﾃｯﾃｰｗｗｗｗ↓ﾃﾚﾚｯﾃﾚﾚｯﾃﾚﾚｰ↑ﾚｰ↑ﾚｰﾚｰｗｗｗ↓)×∞","QZKago Requiem歌います。テレレレレレン♪テレレレレレレレレ♪テレレレレレン♪テレレレレ♪　イスラム教ｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫォォォォォォォ(ﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞbｯｳﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞ)","Gleam stone歌います！ ワッソン👩‍🏭やっくん🙎システィー👉仮面ヾ(O¥O)ゞねびばり👇役者の👆ディープス🤚💂 (´･_･`)＜ササササ 溺れる審査員😱😭テケフォーはいプラ✡️ (´･_･`)＜ギャギャギャギャ ジョイァン💪ジャイアン💪"]
         await message.channel.send(random.choice(songs))
-    if '!neko' in message.content:
-        await message.channel.send('にゃーん')
     
     if sentence.startswith("!roll "):
         d=int(sentence[6:len(sentence)])
