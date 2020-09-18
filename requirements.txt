@@ -1,6 +1,6 @@
 discord.py[voice]>=1.3.2
 Homebrew
-mecab
+mecab>=0.996
 swig
 mecab-python3
 markovify
