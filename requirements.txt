@@ -1,5 +1,5 @@
 discord.py[voice]>=1.3.2
-brew
+Homebrew
 mecab mecab-ipadic
 swig
 pip
