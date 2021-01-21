@@ -1,5 +1,4 @@
 discord.py[voice]>=1.3.2
-csv
 Homebrew
 mecab-python3
 markovify
