@@ -4,6 +4,7 @@ import random
 import unicodedata
 import markovify
 import MeCab
+import csv
 
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 ls=[]
