@@ -8,6 +8,12 @@ import MeCab
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 ls=[]
 bc=0
+test=0
+pronum=0
+client = discord.Client()
+f=open ("history.csv" , "r" , encoding="utf_8")
+reader = csv . reader ( f )
+line = [row for row in reader]
 
 client = discord.Client()
 
@@ -82,10 +88,11 @@ async def on_message(message):
         await message.channel.send(s)
         await message.delete()
     if sentence.startswith("!Help"):
-        em = discord.Embed(title="素因数分解bot ver.1.2.1",color=0x00ffff)
+        em = discord.Embed(title="素因数分解bot ver.1.2.3",color=0x00ffff)
         em.add_field(name="!bunkai *N*",value="*N*を素因数分解した結果を表示させる")
         em.add_field(name="!totsu *S*",value="*S*を角吹き出しで表示させる")
-        em.add_field(name="!bc *L*",value="レベルが*L*の素因数分解の問題を出題")
+        em.add_field(name="!bc *L*",value="レベルが*L*の素因数分解の問題を出題，ans=で回答")
+        em.add_field(name="!クイズ",value="主にテスト対策のクイズを出題，ans=で回答")
         await message.channel.send(embed=em)
     if ('歌って' in message.content):
         songs=["VICTORIA歌います。　サァウ↓ヴァ↑ｗｗｗ リィディアツャｗｗｗケィラァトォカｗｗｗマッジャラストゥ↑ｗｗｗファーレドォｗwｗｗｗ ラファランドゥｗｗｗオグゥトゥアｗｗｗルゥクィアロｗｗｗストォフィアァｗｗｗ ラグゥrｪフｧgarcんｗｗｗｗｗｗ","HARDCOREノ心得歌います。\n1にﾊｰｺｰ\n2にﾊｰｺｰ\n3,4がなくて\n鶏ガラSOOOOOOOOOOOOOOOUPｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ","おしゃま歌います。Lets 牛乳 Death!!ﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｯﾃﾞｯﾃﾞｯﾃﾞｯﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗﾃﾞｰﾝｗｗｗ(ヘドバン( ՞ةڼ◔)ヘドバン( ՞ةڼ◔))","Aleph-0歌います。ジャンｗｗﾃﾞﾚｯﾃｯﾃﾚｯﾃﾚｯﾃｯジャンジャンジャンジャンジャン↑ｗｗｗｗｗﾃﾞﾚｯﾃｯﾃﾚｯﾃﾚｯﾃｯジャンジャンジャンジャンジャン↑ｗｗｗｗデケデケデｗｗｗデケデケデｗｗｗｗデケデケデケデケｗｗｗｗ(temptation…)バババババババババbbb","大宇宙ステージ歌います。「俺　が　一　緒　に　い　て　や　る　か　ら　…　…　」ﾋﾟｭｰｰﾝｗｗｗﾋﾟｰｰｰｯｗｗｗｗﾃﾞｹﾃﾞｹｰｯﾃﾞｹﾃﾞｹｰｯピロリロリロピロリロリロロリロリロロロリロリロロリロリロロピロロロピロロロピロロロピロロロピロロロピロロロピロロロピロロロ","オォ UNDEAD HEARTｗｗｗｗｗ\nオォ UNDEAD HEART ｗｗｗｗｗ\nヽ( ˆᴗˆ )ﾉ ヽ( ˆᴗˆ )ﾉ ヽ( ˆᴗˆ )ﾉ  \n  　/  / 　　　/  / 　　　/  / 　　\n ノ😇ゝ　  ノ😇ゝ　 ノ😇ゝ","Garakuta Doll Play歌います。ｼｰｻﾞｰﾜｯﾄﾝｗｗｗｗｗｱﾝﾀﾞｽﾃｨｰﾝｗｗｗｗｗ(ｱｱｱｱｱｱｱｱ…)ｱｸｼﾌﾞｾｨｰﾃｨｰｗｗｗｵｯﾌﾞｯｼｯﾉｯ!ｗｗｗｗｱﾝﾀﾞｰｽﾃｨｰﾝ(ｱｰｰ…ｴﾌﾞﾘﾅ----","(´･_･`)＜レッツ牛乳death☆wwwwwwﾃｪﾝ↑ﾃｪﾝ↑ﾃｪﾝ↑ﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃﾃﾃﾃﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝﾃｪﾝwwwwｲﾖｫｰ↑↑↑レッツ牛乳death☆(以上繰り返し)","BATTLE NO.1 歌います。アモアモアモアモアアモオジィｫﾞｵﾞｨﾃﾞﾝﾃﾞﾝﾃﾞﾝﾃﾞﾃﾞﾃﾞﾝﾃﾞﾝ\ｱﾓｱﾓ（՞ټ՞☝/ﾃﾞﾝﾃﾞﾝﾃﾞｹﾚﾚ\ｧｱﾓｱﾓ（՞ټ՞;☝/レッツゴォォｵｯｵｯｵｯｵｯｵｯｵｯ…ﾄﾄﾄﾄﾀﾀﾀﾀﾀﾀ\ｱﾓオｩジィ/ｲﾞｴﾞ💪(´･_･`💪)","ᕕ(՞ةڼ◔)ᕗ⁾⁾クァ～ww⇊wユゥ～ン⇈wwwフィ～⇊ン↑↑マイ→ソォ～⇈wwウィンwwウォ↑↑www～ズwww₍₍ ᕕ(՞ةڼ◔)ᕗ⁾⁾wwwア～イ↑↑wwウォ～ンwwwトゥ↓wゴォw↑↑↑wwバットゥ⇊wwア～⇈ハァ～⇈ww₍₍ ᕕ(՞ةڼ◔)ᕗ⁾⁾","エレクリだーーー チャーーラーラーrーtrwrgwウィmrgtzbダツツダツツダツツダツツダツダツデツツデツツ","conflict歌います。ズォールヒ～～↑ｗｗｗｗヴィヤーンタースｗｗｗｗｗワース フェスツｗｗｗｗｗｗｗルオルｗｗｗｗｗプローイユクｗｗｗｗｗｗｗダルフェ スォーイヴォーｗｗｗｗｗスウェンネｗｗｗｗヤットゥ ヴ ヒェンヴガｒジョｊゴアｊガオガオッガｗｗｗじゃｇｊｊ","Cyaegha歌います。ユーアーレッシーwwwワイ↑レッスィ～ジャンwwwwwハィディングシーアンwwwwフィーリンエヴァァ↓ユーアーレッシーwwwワイ↑レッスィ～ジャンwwwwwリィンユァーハァゥアンwwwwwフィーリンバァヴィル↑www","インド人歌います。ｳﾞｪﾝｳﾞｪﾝｳﾞｪﾝｗｗｗｗｗｗｳﾞｪﾊﾊｳﾞｪｯﾊｳﾞｪﾝｗｗｗｗｗ(ﾊｯ!( ﾟдﾟ )彡)ｳﾞｪﾝｳﾞｪﾝｳﾞｪﾝｗｗｗｗｗｗｳﾞｪﾊﾊｳﾞｪｯﾊｳﾞｪﾝｗｗｗｗｗ(ﾊｯﾊ( -д- )彡)","BrainPower歌います。O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA","Garakuta Doll Play歌います。オーマイガーーーァァァァーーーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗｗｗオーマイガーーーァァァァーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗオーマイガーーーァァァァーーァァーーァァーーーァｗｗｗｗｗｗｗｗｗｗｗｗｗｗ","Fracture Ray歌います。テケテケテケテケ…ア～ｱﾋｨｨｨ…ン～ｱﾋｨｨーｲｲｲ… テンテンテンテテテテテンテンテレレン… テンテレレン…テレレン… ｾﾌﾞﾝ…ｽｨｯｸｽ…ﾌｧｲ…ﾌｫｳ…ｽﾘｨ…ﾄｳｩ…ﾜﾝ（ﾃﾚﾃﾚﾚｰ）…ｾﾞﾛ… ドゥーンｗｗｗｗ","Second Heaven歌います。Countdown…8…　7…　6…　5…　4・3・2・1三↓倍↑アイスクリームｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ(ﾃｯﾃﾚﾚｯﾃﾚﾚｯﾃｯﾃｰｗｗｗｗ↓ﾃﾚﾚｯﾃﾚﾚｯﾃﾚﾚｰ↑ﾚｰ↑ﾚｰﾚｰｗｗｗ↓)×∞","QZKago Requiem歌います。テレレレレレン♪テレレレレレレレレ♪テレレレレレン♪テレレレレ♪　イスラム教ｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫｫォォォォォォォ(ﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞbｯｳﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞﾊﾞ)","Gleam stone歌います！ ワッソン👩‍🏭やっくん🙎システィー👉仮面ヾ(O¥O)ゞねびばり👇役者の👆ディープス🤚💂 (´･_･`)＜ササササ 溺れる審査員😱😭テケフォーはいプラ✡️ (´･_･`)＜ギャギャギャギャ ジョイァン💪ジャイアン💪"]
@@ -181,5 +188,19 @@ async def on_message(message):
         else:
             await message.channel.send(me+"WrongAnswer......   The ans is"+str(ls))
             
+    global test
+    global pronum
+    if test==0 and (sentence.startswith("!クイズ") or sentence.startswith("！クイズ")):
+        pronum=random.randint(1,len(line))
+        test=1
+        await message.channel.send("[問題]\n"+line[pronum][1])
+
+    if test==1 and sentence.startswith("ans="):
+        s=sentence[4:len(sentence)]
+        test=0
+        if(s==line[pronum][2]):
+            await message.channel.send(me+"正解！　答えは"+str(line[pronum][2])+" "+str(line[pronum][3]))
+        else:
+            await message.channel.send(me+"残念！　答えは"+str(line[pronum][2])+" "+str(line[pronum][3]))
 
 client.run(TOKEN)
